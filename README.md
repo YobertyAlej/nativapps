@@ -76,6 +76,7 @@ las variables de este entorno:
 
     ```sh
     composer install
+    php artisan ziggy:generate
     npm run build
     php artisan serve
     ```

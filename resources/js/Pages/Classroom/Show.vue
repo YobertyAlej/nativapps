@@ -81,7 +81,8 @@ const back = () => {
                                 </span>
                                 <template v-for="student in classroom.students">
                                     <Link :href="route('students.show', student.id)">
-                                    <span>{{ `${student.first_name} ${student.last_name}` }}</span>
+                                    <span class="text-blue-400">{{ `${student.first_name} ${student.last_name}`
+                                    }}</span>
                                     </Link>
                                 </template>
                             </div>

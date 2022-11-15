@@ -79,12 +79,12 @@ const classrooms = computed(() => props.student.classrooms.map(classroom => ({ n
                             <div class="text-sm text-gray-900 font-bold flex flex-col">
                                 <span v-if="!classrooms.length">
                                     <Link :href="route('students.edit', student.id)">
-                                    <span>Click here to assign classroom</span>
+                                    <span class="text-blue-400">Click here to assign classroom</span>
                                     </Link>
                                 </span>
                                 <template v-for="classroom in classrooms">
                                     <Link :href="route('classrooms.show', classroom.id)">
-                                    <span>{{ classroom.name }}</span>
+                                        <span class="text-blue-400">{{ classroom.name }}</span>
                                     </Link>
                                 </template>
                             </div>
