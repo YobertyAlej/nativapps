@@ -1,0 +1,91 @@
+<script setup>
+import BreezeAuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { Head } from "@inertiajs/inertia-vue3";
+import BreezeButton from "@/Components/PrimaryButton.vue";
+import { Link } from "@inertiajs/inertia-vue3";
+import { useForm } from "@inertiajs/inertia-vue3";
+const props = defineProps({
+    classroom: {
+        type: Object,
+        default: () => ({}),
+    },
+});
+const form = useForm({
+    id: props.classroom.id,
+    name: props.classroom.name,
+    schedule: props.classroom.schedule,
+    start_date: props.classroom.start_date,
+    end_date: props.classroom.end_date,
+});
+const submit = () => {
+    form.put(route("classrooms.update", props.classroom.id));
+};
+</script>
+<template>
+
+    <Head title="Classroom Edit" />
+    <BreezeAuthenticatedLayout>
+        <template #header>
+            <div class="flex justify-between">
+                <h2 class="text-xl font-semibold leading-tight text-gray-800">
+                    Classroom Edit - {{ `${classroom.name}` }}
+                </h2>
+                <Link :href="route('classrooms.show', classroom.id)">
+                <BreezeButton>Go Back</BreezeButton>
+                </Link>
+            </div>
+        </template>
+        <div class="py-12">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                    <div class="p-6 bg-white border-b border-gray-200">
+                        <form @submit.prevent="submit">
+                            <div class="mb-6">
+                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Name</label>
+                                <input type="text" v-model="form.name" name="name"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    placeholder="" />
+                                <div v-if="form.errors.name" class="text-sm text-red-600">
+                                    {{ form.errors.name }}
+                                </div>
+                            </div>
+                            <div class="mb-6">
+                                <label for="schedule"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Schedule</label>
+                                <input type="text" v-model="form.schedule" name="last_name"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    placeholder="" />
+                                <div v-if="form.errors.schedule" class="text-sm text-red-600">
+                                    {{ form.errors.schedule }}
+                                </div>
+                            </div>
+                            <div class="mb-6">
+                                <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900">Start
+                                    Date</label>
+                                <input type="date" v-model="form.start_date" name="start_date" id="start_date"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+                                <div v-if="form.errors.start_date" class="text-sm text-red-600">
+                                    {{ form.errors.start_date }}
+                                </div>
+                            </div>
+                            <div class="mb-6">
+                                <label for="end_date" class="block mb-2 text-sm font-medium text-gray-900">End
+                                    Date</label>
+                                <input type="date" v-model="form.end_date" name="end_date" id="end_date"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+                                <div v-if="form.errors.end_date" class="text-sm text-red-600">
+                                    {{ form.errors.end_date }}
+                                </div>
+                            </div>
+                            <button type="submit"
+                                class="text-white bg-blue-700  focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 "
+                                :disabled="form.processing" :class="{ 'opacity-25': form.processing }">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </BreezeAuthenticatedLayout>
+</template>
