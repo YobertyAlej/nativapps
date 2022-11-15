@@ -5,9 +5,9 @@ import BreezeButton from "@/Components/PrimaryButton.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
 const props = defineProps({
-    students: {
-        type: Object,
-        default: () => ({}),
+    classrooms: {
+        type: Array,
+        default: [],
     },
 });
 const form = useForm({
@@ -15,9 +15,13 @@ const form = useForm({
     last_name: '',
     email: '',
     birthdate: '',
+    classrooms: [],
 });
 const submit = () => {
     form.post(route("students.store"));
+};
+const back = () => {
+    window.history.back();
 };
 </script>
 <template>
@@ -29,7 +33,7 @@ const submit = () => {
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
                     Student Create
                 </h2>
-                <Link :href="route('students.index')">
+                <Link @click="back()">
                 <BreezeButton>Go Back</BreezeButton>
                 </Link>
             </div>
@@ -73,6 +77,20 @@ const submit = () => {
                                     class="block mb-2 text-sm font-medium text-gray-900">Birthdate</label>
                                 <input type="date" v-model="form.birthdate" name="birthdate" id="birthdate"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+                                <div v-if="form.errors.birthdate" class="text-sm text-red-600">
+                                    {{ form.errors.birthdate }}
+                                </div>
+                            </div>
+                            <div class="mb-6">
+                                <label for="classrooms" class="block mb-2 text-sm font-medium text-gray-900">Select an
+                                    option</label>
+                                <select id="classrooms" multiple v-model="form.classrooms"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                    <option v-for="c in classrooms" :key="c.id" :value="c.id">{{
+                                            c.name
+                                    }}
+                                    </option>
+                                </select>
                                 <div v-if="form.errors.birthdate" class="text-sm text-red-600">
                                     {{ form.errors.birthdate }}
                                 </div>

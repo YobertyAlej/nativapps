@@ -7,35 +7,16 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Database\Factories\ClassroomFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Classroom extends Model
+class ClassroomStudent extends Model
 {
     use HasFactory;
 
-    protected $table = 'classrooms';
+    protected $table = 'classroom_student';
 
     protected $fillable = [
-        'name',
-        'schedule',
-        'start_date',
-        'end_date'
+        'classroom_id',
+        'student_id'
     ];
-
-    protected $appends = [
-        'students_count'
-    ];
-
-    public function getStudentsCountAttribute()
-    {
-        return $this->students->count();
-    }
-
-    /**
-     * The roles that belong to the user.
-     */
-    public function students()
-    {
-        return $this->belongsToMany(Student::class)->withTimestamps();
-    }
 
     /**
      * Create a new factory instance for the model.

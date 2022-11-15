@@ -19,6 +19,9 @@ const form = useForm({
 const submit = () => {
     form.post(route("classrooms.store"));
 };
+const back = () => {
+    window.history.back();
+};
 </script>
 <template>
 
@@ -29,7 +32,7 @@ const submit = () => {
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
                     Classroom Create
                 </h2>
-                <Link :href="route('classrooms.index')">
+                <Link @click="back()">
                 <BreezeButton>Go Back</BreezeButton>
                 </Link>
             </div>

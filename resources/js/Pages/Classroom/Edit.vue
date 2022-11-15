@@ -20,6 +20,9 @@ const form = useForm({
 const submit = () => {
     form.put(route("classrooms.update", props.classroom.id));
 };
+const back = () => {
+    window.history.back();
+};
 </script>
 <template>
 
@@ -30,7 +33,7 @@ const submit = () => {
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
                     Classroom Edit - {{ `${classroom.name}` }}
                 </h2>
-                <Link :href="route('classrooms.show', classroom.id)">
+                <Link @click="back()">
                 <BreezeButton>Go Back</BreezeButton>
                 </Link>
             </div>

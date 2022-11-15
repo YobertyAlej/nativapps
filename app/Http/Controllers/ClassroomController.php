@@ -19,7 +19,7 @@ class ClassroomController extends Controller
     public function show(Classroom $classroom)
     {
         return Inertia::render('Classroom/Show', [
-            'classroom' => $classroom
+            'classroom' => $classroom->load('students')
         ]);
     }
 

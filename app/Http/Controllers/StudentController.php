@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Student\StoreRequest;
 use App\Http\Requests\Student\UpdateRequest;
+use App\Models\Classroom;
 use App\Models\Student;
 use Inertia\Inertia;
 
@@ -19,13 +20,15 @@ class StudentController extends Controller
     public function show(Student $student)
     {
         return Inertia::render('Student/Show', [
-            'student' => $student
+            'student' => $student->load('classrooms')
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Student/Create', []);
+        return Inertia::render('Student/Create', [
+            'classrooms' => Classroom::all()
+        ]);
     }
 
     public function store(StoreRequest $request)
@@ -37,7 +40,8 @@ class StudentController extends Controller
             'birthdate' => $request->birthdate,
         ];
 
-        Student::create($payload);
+        $student = Student::create($payload);
+        $student->classrooms()->sync($request->classrooms);
 
         return redirect()
             ->route('students.index')
@@ -49,15 +53,23 @@ class StudentController extends Controller
         return Inertia::render(
             'Student/Edit',
             [
-                'student' => $student
+                'student' => $student->load('classrooms'),
+                'classrooms' => Classroom::all()
             ]
         );
     }
 
     public function update(UpdateRequest $request, Student $student)
     {
-        $payload = $request->all();
+        $payload = [
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'birthdate' => $request->birthdate,
+        ];
+
         $student->update($payload);
+        $student->classrooms()->sync($request->classrooms);
 
         return redirect()
             ->route('students.index')
