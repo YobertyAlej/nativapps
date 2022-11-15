@@ -9,6 +9,10 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
+    classrooms: {
+        type: Array,
+        default: []
+    }
 });
 const form = useForm({
     id: props.student.id,
@@ -16,9 +20,13 @@ const form = useForm({
     last_name: props.student.last_name,
     email: props.student.email,
     birthdate: props.student.birthdate,
+    classrooms: props.student.classrooms.map(c => c.id),
 });
 const submit = () => {
     form.put(route("students.update", props.student.id));
+};
+const back = () => {
+    window.history.back();
 };
 </script>
 <template>
@@ -30,7 +38,7 @@ const submit = () => {
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
                     Student Edit - {{ `${student.first_name} ${student.last_name}` }}
                 </h2>
-                <Link :href="route('students.show', student.id)">
+                <Link @click="back()">
                 <BreezeButton>Go Back</BreezeButton>
                 </Link>
             </div>
@@ -74,6 +82,21 @@ const submit = () => {
                                     class="block mb-2 text-sm font-medium text-gray-900">Birthdate</label>
                                 <input type="date" v-model="form.birthdate" name="birthdate" id="birthdate"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+                                <div v-if="form.errors.birthdate" class="text-sm text-red-600">
+                                    {{ form.errors.birthdate }}
+                                </div>
+                            </div>
+                            <div class="mb-6">
+                                <label for="classrooms" class="block mb-2 text-sm font-medium text-gray-900">Select an
+                                    option</label>
+                                <select id="classrooms" multiple v-model="form.classrooms"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                    <option v-for="classroom in classrooms" :key="classroom.id" :value="classroom.id"
+                                        :selected="student.classrooms.map(c => c.id).includes(classroom.id)">{{
+                                                classroom.name
+                                        }}
+                                    </option>
+                                </select>
                                 <div v-if="form.errors.birthdate" class="text-sm text-red-600">
                                     {{ form.errors.birthdate }}
                                 </div>

@@ -54,6 +54,9 @@ function destroy(id) {
                                             End Date
                                         </th>
                                         <th scope="col" class="px-6 py-3">
+                                            Students
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
                                             Show
                                         </th>
                                         <th scope="col" class="px-6 py-3">
@@ -80,6 +83,9 @@ function destroy(id) {
                                         </td>
                                         <td class="px-6 py-4 font-medium text-gray-900">
                                             {{ classroom.end_date }}
+                                        </td>
+                                        <td class="px-6 py-4 font-medium text-gray-900">
+                                            {{ classroom.students_count }}
                                         </td>
                                         <td class="px-6 py-4">
                                             <Link :href="

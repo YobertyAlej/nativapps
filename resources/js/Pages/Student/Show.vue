@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from "vue";
 import BreezeAuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import BreezeButton from "@/Components/PrimaryButton.vue";
@@ -10,6 +11,11 @@ const props = defineProps({
         default: () => ({}),
     },
 });
+
+const back = () => {
+    window.history.back();
+};
+const classrooms = computed(() => props.student.classrooms.map(classroom => ({ name: classroom.name, id: classroom.id })))
 </script>
 <template>
 
@@ -21,7 +27,7 @@ const props = defineProps({
                     {{ `${student.first_name} ${student.last_name}` }}
                 </h2>
                 <div>
-                    <Link :href="route('students.index')" class="mr-3">
+                    <Link @click="back()" class="mr-3">
                     <BreezeButton>Go back</BreezeButton>
                     </Link>
                     <Link :href="route('students.edit', student.id)">
@@ -64,6 +70,23 @@ const props = defineProps({
                             </label>
                             <div class="text-sm text-gray-900 font-bold">
                                 {{ student.birthdate }}
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label for="birthdate" class="block mb-2 text-sm font-medium text-gray-900">
+                                Classrooms
+                            </label>
+                            <div class="text-sm text-gray-900 font-bold flex flex-col">
+                                <span v-if="!classrooms.length">
+                                    <Link :href="route('students.edit', student.id)">
+                                    <span>Click here to assign classroom</span>
+                                    </Link>
+                                </span>
+                                <template v-for="classroom in classrooms">
+                                    <Link :href="route('classrooms.show', classroom.id)">
+                                    <span>{{ classroom.name }}</span>
+                                    </Link>
+                                </template>
                             </div>
                         </div>
                     </div>

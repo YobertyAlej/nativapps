@@ -19,6 +19,14 @@ class Student extends Model
     ];
 
     /**
+     * The roles that belong to the user.
+     */
+    public function classrooms()
+    {
+        return $this->belongsToMany(Classroom::class)->withTimestamps();
+    }
+
+    /**
      * Create a new factory instance for the model.
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory

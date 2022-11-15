@@ -10,6 +10,11 @@ const props = defineProps({
         default: () => ({}),
     },
 });
+
+const back = () => {
+    window.history.back();
+};
+
 </script>
 <template>
 
@@ -18,10 +23,10 @@ const props = defineProps({
         <template #header>
             <div class="flex justify-between">
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                    {{ `${classroom.first_name} ${classroom.last_name}` }}
+                    {{ `${classroom.name}` }}
                 </h2>
                 <div>
-                    <Link :href="route('classrooms.index')" class="mr-3">
+                    <Link @click="back()" class="mr-3">
                     <BreezeButton>Go back</BreezeButton>
                     </Link>
                     <Link :href="route('classrooms.edit', classroom.id)">
@@ -64,6 +69,21 @@ const props = defineProps({
                             </label>
                             <div class="text-sm text-gray-900 font-bold">
                                 {{ classroom.end_date }}
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label for="birthdate" class="block mb-2 text-sm font-medium text-gray-900">
+                                Students
+                            </label>
+                            <div class="text-sm text-gray-900 font-bold flex flex-col">
+                                <span v-if="!classroom.students">
+                                    No students assigned
+                                </span>
+                                <template v-for="student in classroom.students">
+                                    <Link :href="route('students.show', student.id)">
+                                    <span>{{ `${student.first_name} ${student.last_name}` }}</span>
+                                    </Link>
+                                </template>
                             </div>
                         </div>
                     </div>
