@@ -1,66 +1,90 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Proceso de selección NativApps
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este repositorio contiene el codigo fuente de la prueba de seleccion de talento para NativApps,
+el mismo esta pensado para solucionar una prueba de concepto sencilla, desarrollada en PHP y JS,
+usando las tecnologias Laravel 9.x y Vue 3 para su desarrollo, usando vite como herramienta
+de tooling y building.
 
-## About Laravel
+## El reto
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Construya una aplicación web con estructura monolítica con Laravel que permita la gestión de
+cursos, estudiantes y la asignación entre estos, teniendo en cuenta que un estudiante puede estar
+asociado a varios cursos.
 
--   [Simple, fast routing engine](https://laravel.com/docs/routing).
--   [Powerful dependency injection container](https://laravel.com/docs/container).
--   Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
--   Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
--   Database agnostic [schema migrations](https://laravel.com/docs/migrations).
--   [Robust background job processing](https://laravel.com/docs/queues).
--   [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Entidades
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* Estudiante
 
-## Learning Laravel
+Nombre
+Apellido
+Edad
+Correo electrónico
+Cursos asociados
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* Cursos
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Nombre
+Horario
+Fecha inicio
+Fecha Fin
+Número de estudiantes asociados
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Operaciones requeridas
 
-## Laravel Sponsors
+* CRUD de estudiantes
+* CRUD de cursos
+* Asignación de estudiante a un curso especifico
+* Consulta del top 3 de los cursos con más estudiantes en los últimos 6 meses
+* Listado de cursos a los que se encuentra asignado un estudiante
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+para mas información consultar el apartado de docs
 
-### Premium Partners
+## Setup y serve
 
--   **[Vehikl](https://vehikl.com/)**
--   **[Tighten Co.](https://tighten.co)**
--   **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
--   **[64 Robots](https://64robots.com)**
--   **[Cubet Techno Labs](https://cubettech.com)**
--   **[Cyber-Duck](https://cyber-duck.co.uk)**
--   **[Many](https://www.many.co.uk)**
--   **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
--   **[DevSquad](https://devsquad.com)**
--   **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
--   **[OP.GG](https://op.gg)**
--   **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
--   **[Lendio](https://lendio.com)**
+### Pre-requisitos
 
-## Contributing
+* PHP ^8.0.2
+* Node 14.18+, 16+
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Pasos
 
-## Code of Conduct
+1. Lo primero es clonar este repositorio usando el comando
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ```sh
+    git@github.com:YobertyAlej/nativapps.git
+    ```
 
-## Security Vulnerabilities
+2. Copiar y renombrar las variables de entorno de la aplicación, ajustar en caso de ser necesario por colision o preferencia.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    ```sh
+    cp .env.example .env
+    ```
 
-## License
+3. Por defecto la base de datos a usar es una conexion externa a heroku, es necesario añadir
+las variables de este entorno:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    ```.env
+        DB_CONNECTION=pgsql
+        DB_HOST=
+        DB_PORT=5432
+        DB_DATABASE=
+        DB_USERNAME=
+        DB_PASSWORD=
+    ```
+
+4. Desde el root folder de nuestro proyecto correr
+
+    ```sh
+    composer install
+    npm run build
+    php artisan serve
+    ```
+
+5. Revisa el acceso a la app en [http://localhost:8000](http://localhost:8000)
+
+6. Si deseas correr la app con una base de datos distinta a la por defecto debes correr el comando de migración
+
+    ```sh
+    php artisan migrate
+    php artisan db:seed
+    ```
