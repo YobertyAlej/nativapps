@@ -31,8 +31,10 @@ const props = defineProps({
                     </div>
                     <div class="p-6 bg-white border-b border-gray-200 flex justify-between"
                         v-for="course in top_courses">
-                        <span>Name: <span class="font-bold">{{ course.name }}</span></span>
-                        <span>Number of students: <span class="font-bold">{{ course.students_count }}</span></span>
+                        <span class="flex flex-col">
+                            <span class="font-bold">{{ course.name }}</span>
+                            <span>Number of students: <span class="font-bold">{{ course.students_count }}</span></span>
+                        </span>
                         <Link :href="route('classrooms.show', course.id)">
                         <BreezeButton>Visit</BreezeButton>
                         </Link>
