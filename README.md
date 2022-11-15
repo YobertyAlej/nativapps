@@ -77,6 +77,8 @@ las variables de este entorno:
     ```sh
     composer install
     php artisan ziggy:generate
+    php artisan key:generate
+    npm install
     npm run build
     php artisan serve
     ```
@@ -89,3 +91,7 @@ las variables de este entorno:
     php artisan migrate
     php artisan db:seed
     ```
+
+## Troubleshooting
+
+Recuerde acceder en local usando localhost y no 127.0.0.1, esto para evitar conflictos con CORS
